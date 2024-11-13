@@ -11,20 +11,16 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 # The path to output all built .py files to:
-UI_PYTHON_PATH=../python/not_found_dialog/ui
+UI_PYTHON_PATH=../ui
 PYTHON_BASE="/Applications/Shotgun.app/Contents/Resources/Python"
 
-# Remove any problematic profiles from pngs.
-for f in *.png; do mogrify $f; done
-
-# Helper functions to build UI files
 function build_qt {
     echo " > Building " $2
 
     # compile ui to python
     $1 $2 > $UI_PYTHON_PATH/$3.py
 
-    # replace PySide imports with tank.platform.qt and remove line containing Created by date
+    # replace PySide imports with sgtk.platform.qt and remove line containing Created by date
     sed -i $UI_PYTHON_PATH/$3.py -e "s/from PySide import/from tank.platform.qt import/g" -e "/# Created:/d"
 }
 
@@ -36,12 +32,6 @@ function build_res {
     build_qt "${PYTHON_BASE}/bin/pyside-rcc -py3" "$1.qrc" "$1_rc"
 }
 
-
 # build UI's:
 echo "building user interfaces..."
-build_ui dialog
-# add any additional .ui files you want converted here!
-
-# build resources
-echo "building resources..."
-build_res resources
+build_ui splash_new
