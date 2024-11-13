@@ -280,8 +280,9 @@ class BaseLauncher(object):
                 # Write an event log entry
                 self._register_event_log(menu_name, app_engine, context, launch_cmd)
                 # got UI support. Launch dialog with nice message
-                if self._tk_app.engine.has_ui:
-                    self.launch_indicator(app_path)
+                # Benuts edit: don't show it.
+                # if self._tk_app.engine.has_ui:
+                #     self.launch_indicator(app_path)
 
         except Exception as launch_app_error:
             msg = str(launch_app_error)
